@@ -41,10 +41,12 @@ public class Shell {
 		public void run() {
 			try {
 				String line;
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(mInputStream));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(mInputStream));
 				if((line = reader.readLine()) != null) {
-					mBuffer.append(Shell.EOL).append(line);
+					mBuffer.append(line);
+					while((line = reader.readLine()) != null) {
+						mBuffer.append(Shell.EOL).append(line);
+					}
 				}
 			} catch(IOException e) {
 				e.printStackTrace();
