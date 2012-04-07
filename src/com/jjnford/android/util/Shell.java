@@ -53,7 +53,10 @@ public class Shell {
 			}
 		}
 	}
-	
+
+	/**
+	 * Block instantiation of this object.
+	 */
 	private Shell() {}
 	
 	/*
