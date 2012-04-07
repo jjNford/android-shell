@@ -157,8 +157,10 @@ public class Shell {
 	 * 
 	 * @param cmd The command to execute in the native shell.
 	 * @return Output of the command, null if there is no output.
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
-	public static String exec(String cmd) {
-		return null;
+	public static String exec(String cmd) throws IOException, InterruptedException {
+		return Shell.nativeExec(cmd);
 	}
 }
