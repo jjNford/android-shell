@@ -1,9 +1,64 @@
 package com.jjnford.android.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class Shell {
 
-	private Shell() {}
+	private static final String EOL = System.getProperty("line.separator");
+	private static final String EXIT = "exit" + Shell.EOL;
 
+	/**
+	 * Used to buffer shell output off of the main thread.
+	 * 
+	 * @author JJ Ford
+	 *
+	 */
+	private static class Buffer extends Thread {
+		private InputStream mInputStream;
+		private StringBuffer mBuffer;
+		
+		/**
+		 * @param inputStream Data stream to get shell output from.
+		 */
+		public Buffer(InputStream inputStream) {
+			mInputStream = inputStream;
+			mBuffer = new StringBuffer();
+			this.start();
+		}
+		
+		public String getOutput() {
+			return mBuffer.toString();
+		}
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Thread#run()
+		 */
+		@Override
+		public void run() {
+			try {
+				String line;
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(mInputStream));
+				if((line = reader.readLine()) != null) {
+					mBuffer.append(Shell.EOL).append(line);
+				}
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private Shell() {}
+	
+	/*
+	 * API
+	 * 
+	 */
+	
 	/**
 	 * Gain privileges to root shell.  Device must be rooted to use.
 	 * 
