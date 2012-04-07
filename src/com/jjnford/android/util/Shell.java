@@ -13,6 +13,7 @@ public class Shell {
 	
 	private static OUTPUT sOStream = OUTPUT.STDOUT;
 	
+	private static String sShell;
 	private static final String EOL = System.getProperty("line.separator");
 	private static final String EXIT = "exit" + Shell.EOL;
 
@@ -82,13 +83,12 @@ public class Shell {
 	}
 	
 	/**
-	 * Executes a command in the root shell.  Devices must be rooted to use.
+	 * Sets the su shell to be used.
 	 * 
-	 * @param cmd The command to execute in root shell.
-	 * @return True if command is executed successfully, false if not.
+	 * @param shell The shell to be used for sudo.
 	 */
-	public static boolean sudo(String cmd) {
-		return false;
+	public void setShell(String shell) {
+		sShell = shell;
 	}
 	
 	/**
