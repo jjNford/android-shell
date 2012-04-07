@@ -1,9 +1,12 @@
 package com.jjnford.android.util;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Shell {
 	
@@ -141,6 +144,20 @@ public class Shell {
 		return buffer.getOutput();
 	}
 	
+	/**
+	 * Finds and sets the su shell that has root privileges.
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 */
+	private static void setSuShell() throws IOException, InterruptedException {
+		for(SU_COMMAND cmd : SU_COMMAND.values()) {
+			sShell = cmd.getCommand();
+			if(Shell.isRootUid()) {
+				return;
+			}
+		}
+		sShell = null;
+	}
 	
 	/**
 	 * Determines if the su shell has root privileges.
