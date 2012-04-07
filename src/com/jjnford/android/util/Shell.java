@@ -120,6 +120,27 @@ public class Shell {
 	}
 	
 	/**
+	 * Executes a command in the su shell.
+	 * 
+	 * @param cmd The command to execute.
+	 * @return Output of the command, null if there is no output.
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	private static String suExec(String cmd) throws IOException, InterruptedException {
+		Process proc = Runtime.getRuntime().exec(sShell);
+		Buffer buffer = getBuffer(proc);
+		DataOutputStream shell = new DataOutputStream(proc.getOutputStream());
+		
+		// Write su command to su shell.
+		shell.writeBytes(cmd + Shell.EOL);
+		shell.flush();
+		shell.writeBytes(Shell.EXIT);
+		shell.flush();
+		proc.waitFor();
+		return buffer.getOutput();
+	}
+	
 	 * Gets the buffer for the shell output stream that is currently set.
 	 * 
 	 * @param proc Process running the shell command.
