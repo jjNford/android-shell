@@ -35,14 +35,14 @@ public class Shell {
 	}
 	
 	// Define uid commands.
-	private static enum UID_COMMANDS {
+	private static enum UID_COMMAND {
 		ID("id"),
 		BIN("/system/bin/id"),
 		XBIN("/system/xbin/id");
 		
 		private String mCmd;
 		
-		UID_COMMANDS(String cmd) {
+		UID_COMMAND(String cmd) {
 			mCmd = cmd;
 		}
 		
