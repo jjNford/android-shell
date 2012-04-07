@@ -66,6 +66,33 @@ public class Shell {
 	 */
 	private Shell() {}
 	
+	/**
+	 * Gets the buffer for the shell output stream that is currently set.
+	 * 
+	 * @param proc Process running the shell command.
+	 * @return The buffer containing the shell output stream, NULL is none.
+	 */
+	private static Buffer getBuffer(Process proc) {
+		Buffer buffer = null;
+		switch(sOStream) {
+			case NONE:
+				new Buffer(proc.getInputStream());
+				new Buffer(proc.getErrorStream());
+				break;
+			case STDOUT:
+				buffer = new Buffer(proc.getInputStream());
+				new Buffer(proc.getErrorStream());
+				break;
+			case STDERR:
+				buffer = new Buffer(proc.getErrorStream());
+				new Buffer(proc.getInputStream());
+				break;
+			default:
+				return buffer;
+		}
+		return buffer;
+	}
+	
 	/* 
 	 * API
 	 * 
