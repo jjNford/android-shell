@@ -15,14 +15,14 @@ public class Shell {
 	private static OUTPUT sOStream = OUTPUT.STDOUT;
 	
 	// Define su commands.
-	private static enum SU_COMMANDS {
+	private static enum SU_COMMAND {
 		SU("su"),
 		BIN("/system/bin/su"),
 		XBIN("/system/xbin/su");
 		
 		private String mCmd;
 		
-		SU_COMMANDS(String cmd) {
+		SU_COMMAND(String cmd) {
 			mCmd = cmd;
 		}
 		
