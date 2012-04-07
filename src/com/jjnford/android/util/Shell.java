@@ -252,9 +252,16 @@ public class Shell {
 	 * 
 	 * @param cmd The command to execute in root shell.
 	 * @return Output of the command, null if there is no output.
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
-	public static String sudo(String cmd) {
-		return null;
+	public static String sudo(String cmd) throws IOException, InterruptedException {
+		if(Shell.su()) {
+			return Shell.suExec(cmd);
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/**
