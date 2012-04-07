@@ -1,4 +1,4 @@
-package com.jjnford.android.shell.util;
+package com.jjnford.android.util;
 
 public class Shell {
 
