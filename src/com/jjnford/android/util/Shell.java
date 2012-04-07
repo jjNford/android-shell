@@ -141,6 +141,30 @@ public class Shell {
 		return buffer.getOutput();
 	}
 	
+	
+	/**
+	 * Determines if the su shell has root privileges.
+	 * 
+	 * @return True if the su shell has root privileges, false if not.
+	 * @throws InterruptedException 
+	 * @throws IOException 
+	 */
+	private static boolean isRootUid() throws IOException, InterruptedException {
+		for(UID_COMMAND uid : UID_COMMAND.values()) {
+			String output = Shell.sudo(uid.getCommand());
+			if(output != null && output.length() > 0) {
+				Matcher regex = Pattern.compile("^uid=(\\d+).*?").matcher(output);
+				if(regex.matches()) {
+					if("0".equals(regex.group(1))) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Gets the buffer for the shell output stream that is currently set.
 	 * 
 	 * @param proc Process running the shell command.
