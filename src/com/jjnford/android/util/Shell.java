@@ -59,6 +59,36 @@ public class Shell {
 	private static final String EXIT = "exit" + Shell.EOL;
 
 	/**
+	 * Shell Interface Utility Exception is used to compress IOExcptions and InterruptedExceptions.
+	 * 
+	 * @author JJ Ford
+	 *
+	 */
+	public static class ShellException extends Exception {
+		private static final long serialVersionUID = 4820332926695755116L;
+		private String mMsg;
+		
+		public ShellException() {
+			super();
+			mMsg = "Shell Interface Error";
+		}
+		
+		public ShellException(String msg) {
+			mMsg = msg;
+		}
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Throwable#getMessage()
+		 */
+		@Override
+		public String getMessage() {
+			// TODO Auto-generated method stub
+			return mMsg;
+		}	
+	}
+	
+	/**
 	 * Used to buffer shell output off of the main thread.
 	 * 
 	 * @author JJ Ford
