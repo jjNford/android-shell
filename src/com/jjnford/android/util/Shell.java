@@ -67,6 +67,21 @@ public class Shell {
 	private Shell() {}
 	
 	/**
+	 * Executes a command in the devices native shell.
+	 * 
+	 * @param cmd The command to execute.
+	 * @return Output of the command, null if there is no output.
+	 * @throws IOException 
+	 * @throws InterruptedException 
+	 */
+	private static String nativeExec(String cmd) throws IOException, InterruptedException {
+		Process proc = Runtime.getRuntime().exec(cmd);
+		Buffer buffer = getBuffer(proc);
+		proc.waitFor();
+		return buffer.getOutput();
+	}
+	
+	/**
 	 * Gets the buffer for the shell output stream that is currently set.
 	 * 
 	 * @param proc Process running the shell command.
