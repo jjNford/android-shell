@@ -7,11 +7,49 @@ import java.io.InputStreamReader;
 
 public class Shell {
 	
+	// Define output streams.
 	public static enum OUTPUT {
 		NONE, STDOUT, STDERR
 	};
 	
 	private static OUTPUT sOStream = OUTPUT.STDOUT;
+	
+	// Define su commands.
+	private static enum SU_COMMANDS {
+		SU("su"),
+		BIN("/system/bin/su"),
+		XBIN("/system/xbin/su");
+		
+		private String mCmd;
+		
+		SU_COMMANDS(String cmd) {
+			mCmd = cmd;
+		}
+		
+		/**
+		 * @return Set su command.
+		 */
+		public String getCommand() {
+			return mCmd;
+		}
+	}
+	
+	// Define uid commands.
+	private static enum UID_COMMANDS {
+		ID("id"),
+		BIN("/system/bin/id"),
+		XBIN("/system/xbin/id");
+		
+		private String mCmd;
+		
+		UID_COMMANDS(String cmd) {
+			mCmd = cmd;
+		}
+		
+		public String getCommand() {
+			return mCmd;
+		}
+	}
 	
 	private static String sShell;
 	private static final String EOL = System.getProperty("line.separator");
