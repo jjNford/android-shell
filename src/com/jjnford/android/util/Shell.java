@@ -6,7 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Shell {
-
+	
+	public static enum OUTPUT {
+		NONE, STDOUT, STDERR
+	};
+	
+	private static OUTPUT sOStream = OUTPUT.STDOUT;
+	
 	private static final String EOL = System.getProperty("line.separator");
 	private static final String EXIT = "exit" + Shell.EOL;
 
@@ -59,18 +65,20 @@ public class Shell {
 	 */
 	private Shell() {}
 	
-	/*
+	/* 
 	 * API
+	 * 
+	 * 
 	 * 
 	 */
 	
 	/**
-	 * Gains privileges to root shell.  Device must be rooted to use.
+	 * Sets the shell's {@link Shell.OUTPUT output stream}.  Default value is STDOUT.
 	 * 
-	 * @return True if root shell is obtained, false if not.
+	 * @param ostream
 	 */
-	public static boolean su() {
-		return false;
+	public void setOutputStream(Shell.OUTPUT ostream) {
+		sOStream = ostream;
 	}
 	
 	/**
