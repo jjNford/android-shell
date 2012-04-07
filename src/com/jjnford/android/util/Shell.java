@@ -142,14 +142,19 @@ public class Shell {
 	 * 
 	 * @param cmd The command to execute.
 	 * @return Output of the command, null if there is no output.
-	 * @throws IOException 
-	 * @throws InterruptedException 
+	 * @throws ShellException 
 	 */
-	private static String nativeExec(String cmd) throws IOException, InterruptedException {
-		Process proc = Runtime.getRuntime().exec(cmd);
-		Buffer buffer = getBuffer(proc);
-		proc.waitFor();
-		return buffer.getOutput();
+	private static String nativeExec(String cmd) throws ShellException {
+		Process proc = null;
+		Buffer buffer = null;
+		try {
+			proc = Runtime.getRuntime().exec(cmd);
+			buffer = getBuffer(proc);
+			proc.waitFor();
+			return buffer.getOutput();
+		} catch (Exception e) {
+			throw new ShellException();
+		}		
 	}
 	
 	/**
@@ -157,29 +162,32 @@ public class Shell {
 	 * 
 	 * @param cmd The command to execute.
 	 * @return Output of the command, null if there is no output.
-	 * @throws IOException
-	 * @throws InterruptedException
+	 * @throws ShellException 
 	 */
-	private static String suExec(String cmd) throws IOException, InterruptedException {
-		Process proc = Runtime.getRuntime().exec(sShell);
-		Buffer buffer = getBuffer(proc);
-		DataOutputStream shell = new DataOutputStream(proc.getOutputStream());
+	private static String suExec(String cmd) throws ShellException {
+		try {
+			Process proc = Runtime.getRuntime().exec(sShell);
+			Buffer buffer = getBuffer(proc);
+			DataOutputStream shell = new DataOutputStream(proc.getOutputStream());
+			
+			// Write su command to su shell.
+			shell.writeBytes(cmd + Shell.EOL);
+			shell.flush();
+			shell.writeBytes(Shell.EXIT);
+			shell.flush();
+			proc.waitFor();
+			return buffer.getOutput();
 		
-		// Write su command to su shell.
-		shell.writeBytes(cmd + Shell.EOL);
-		shell.flush();
-		shell.writeBytes(Shell.EXIT);
-		shell.flush();
-		proc.waitFor();
-		return buffer.getOutput();
+		} catch (Exception e) {
+			throw new ShellException();
+		}
 	}
 	
 	/**
 	 * Finds and sets the su shell that has root privileges.
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @throws ShellException 
 	 */
-	private static void setSuShell() throws IOException, InterruptedException {
+	private static void setSuShell() throws ShellException {
 		for(SU_COMMAND cmd : SU_COMMAND.values()) {
 			sShell = cmd.getCommand();
 			if(Shell.isRootUid()) {
@@ -193,10 +201,9 @@ public class Shell {
 	 * Determines if the su shell has root privileges.
 	 * 
 	 * @return True if the su shell has root privileges, false if not.
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @throws ShellException 
 	 */
-	private static boolean isRootUid() throws IOException, InterruptedException {
+	private static boolean isRootUid() throws ShellException {
 		for(UID_COMMAND uid : UID_COMMAND.values()) {
 			String output = Shell.sudo(uid.getCommand());
 			if(output != null && output.length() > 0) {
@@ -267,10 +274,9 @@ public class Shell {
 	 * Gains privileges to root shell.  Device must be rooted to use.
 	 * 
 	 * @return True if root shell is obtained, false if not.
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @throws ShellException 
 	 */
-	public static boolean su() throws IOException, InterruptedException {
+	public static boolean su() throws ShellException {
 		if(sShell == null) {
 			Shell.setSuShell();
 		}
@@ -282,10 +288,11 @@ public class Shell {
 	 * 
 	 * @param cmd The command to execute in root shell.
 	 * @return Output of the command, null if there is no output.
+	 * @throws ShellException 
 	 * @throws InterruptedException 
 	 * @throws IOException 
 	 */
-	public static String sudo(String cmd) throws IOException, InterruptedException {
+	public static String sudo(String cmd) throws ShellException {
 		if(Shell.su()) {
 			return Shell.suExec(cmd);
 		} else {
@@ -299,10 +306,9 @@ public class Shell {
 	 * 
 	 * @param cmd The command to execute in the native shell.
 	 * @return Output of the command, null if there is no output.
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @throws ShellException 
 	 */
-	public static String exec(String cmd) throws IOException, InterruptedException {
+	public static String exec(String cmd) throws ShellException {
 		return Shell.nativeExec(cmd);
 	}
 }
