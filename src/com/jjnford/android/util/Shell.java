@@ -257,7 +257,7 @@ public class Shell {
 	 * 
 	 * @param ostream
 	 */
-	public void setOutputStream(Shell.OUTPUT ostream) {
+	synchronized public void setOutputStream(Shell.OUTPUT ostream) {
 		sOStream = ostream;
 	}
 	
@@ -266,7 +266,7 @@ public class Shell {
 	 * 
 	 * @param shell The shell to be used for sudo.
 	 */
-	public void setShell(String shell) {
+	synchronized public void setShell(String shell) {
 		sShell = shell;
 	}
 	
@@ -276,7 +276,7 @@ public class Shell {
 	 * @return True if root shell is obtained, false if not.
 	 * @throws ShellException 
 	 */
-	public static boolean su() throws ShellException {
+	synchronized public static boolean su() {
 		if(sShell == null) {
 			Shell.setSuShell();
 		}
@@ -292,7 +292,7 @@ public class Shell {
 	 * @throws InterruptedException 
 	 * @throws IOException 
 	 */
-	public static String sudo(String cmd) throws ShellException {
+	synchronized public static String sudo(String cmd) throws ShellException {
 		if(Shell.su()) {
 			return Shell.suExec(cmd);
 		} else {
@@ -308,7 +308,7 @@ public class Shell {
 	 * @return Output of the command, null if there is no output.
 	 * @throws ShellException 
 	 */
-	public static String exec(String cmd) throws ShellException {
+	synchronized public static String exec(String cmd) throws ShellException {
 		return Shell.nativeExec(cmd);
 	}
 }
