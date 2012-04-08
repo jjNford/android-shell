@@ -274,11 +274,14 @@ public class Shell {
 	 * Gains privileges to root shell.  Device must be rooted to use.
 	 * 
 	 * @return True if root shell is obtained, false if not.
-	 * @throws ShellException 
 	 */
 	synchronized public static boolean su() {
 		if(sShell == null) {
-			Shell.setSuShell();
+			try {
+				Shell.setSuShell();
+			} catch (ShellException e) {
+				sShell = null;
+			}
 		}
 		return sShell != null;
 	}
