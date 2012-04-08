@@ -1,6 +1,7 @@
 How To Use
 ----------
 Add [this class](https://github.com/jjNford/android-shell/blob/master/src/com/jjnford/android/util/Shell.java) to your project to use.
+This application is an example of how the Shell utility class can be used.
 
 The JavaDoc API is included in the API directory.  To view the API open the index.html file in any web browser.
 
