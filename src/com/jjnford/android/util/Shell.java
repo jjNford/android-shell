@@ -255,7 +255,7 @@ public class Shell {
 	/**
 	 * Sets the shell's {@link Shell.OUTPUT output stream}.  Default value is STDOUT.
 	 * 
-	 * @param ostream
+	 * @param ostream The output Stream to read shell from.
 	 */
 	synchronized public void setOutputStream(Shell.OUTPUT ostream) {
 		sOStream = ostream;
