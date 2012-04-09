@@ -8,20 +8,15 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 import com.jjnford.android.shell.R;
 import com.jjnford.android.util.Shell;
 import com.jjnford.android.util.Shell.ShellException;
 
-public class DriverActivity extends Activity implements OnClickListener {
+public class DriverActivity extends Activity {
 	
 	public static final String LOG_TAG = "shell-example";
-	
-	private Button mCommandButton;
-	private Button mNetworkButton;
-	
+		
 	/*
 	 * (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -31,66 +26,39 @@ public class DriverActivity extends Activity implements OnClickListener {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.main);    	
     }
-
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Activity#onResume()
-	 */
-	@Override
-	protected void onResume() {
-		bindButtons();
-		super.onResume();
-	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	/**
+	 * Events for Bin Commands button binding.
+	 * 
+	 * @param view The Bin Command Button View.
 	 */
-	@Override
-	public void onClick(View button) {
-		String title = null;
-		String[] list = null;
+	public void onBinCommandsButtonClick(View view) {
+		String title = "Commands";
+		String[] list = getBinCommands();
 		
-		if(button.getId() == mCommandButton.getId()) {
-			title = "Commands";
-			list = getBinCommands();
-		} else if(button.getId() == mNetworkButton.getId()) {
-			title = "Network Adapters";
-			list = getNetworkAdapters();
-		}
-		
-		// Display dialog with data.
 		if(list == null || list.length == 0) {
-			displayErrorDialog("Requires that device be rooted.");
+			displayErrorDialog("No Commands found.");
 		} else {
 			displayListDialog(title, list);
 		}
 	}
 	
 	/**
-	 * Binds events to activities buttons.
+	 * Evens for Network Adapters button binding.
+	 * 
+	 * @param view The Network Adapters Button View.
 	 */
-	private void bindButtons() {
-		bindCommandButton();
-		bindNetworkButton();
+	public void onNetworkAdaptersButtonClick(View view) {
+		String title = "Network Adapters";
+		String[] list = getNetworkAdapters();
+		
+		if(list == null || list.length == 0) {
+			displayErrorDialog("Requires that device be rooted.");
+		} else {
+			displayListDialog(title, list);
+		}
 	}
-	
-	/**
-	 * Binds events to the command button.
-	 */
-	private void bindCommandButton() {
-		mCommandButton = (Button) findViewById(R.id.bin_commands);
-		mCommandButton.setOnClickListener(this);
-	}
-	
-	/**
-	 * Bind events to the network button.
-	 */
-	private void bindNetworkButton() {
-		mNetworkButton = (Button) findViewById(R.id.network_adapters);
-		mNetworkButton.setOnClickListener(this);
-	}
-	
+		
 	/**
 	 * @return List of all commands in /system/bin.
 	 */

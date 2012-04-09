@@ -9,12 +9,17 @@
         android:id="@+id/bin_commands"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bin_commands" android:layout_marginBottom="25dp" android:height="75dp"/>
+        android:text="@string/bin_commands" 
+        android:layout_marginBottom="25dp" 
+        android:height="75dp" 
+        android:onClick="onBinCommandsButtonClick" />
 
     <Button
         android:id="@+id/network_adapters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/network_adapters" android:height="75dp"/>
+        android:text="@string/network_adapters" 
+        android:height="75dp"
+        android:onClick="onNetworkAdaptersButtonClick" />
     
 </LinearLayout>
