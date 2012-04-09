@@ -22,10 +22,10 @@ public class DriverActivity extends Activity {
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
-    	setContentView(R.layout.main);    	
-    }
+    	public void onCreate(Bundle savedInstanceState) {
+    		super.onCreate(savedInstanceState);
+    		setContentView(R.layout.main);
+    	}
 	
 	/**
 	 * Events for Bin Commands button binding.
