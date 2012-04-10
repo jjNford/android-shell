@@ -114,6 +114,7 @@ public class DriverActivity extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(title);
 		builder.setItems(list, null);
+		builder.setPositiveButton("Continue", null);
 		dialog = builder.create();
 		dialog.show();
 	}
@@ -128,7 +129,6 @@ public class DriverActivity extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Error");
 		builder.setPositiveButton("Continue", null);
-		builder.setNegativeButton(null, null);
 		builder.setMessage(msg);
 		dialog = builder.create();
 		dialog.show();
