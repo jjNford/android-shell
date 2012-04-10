@@ -66,11 +66,10 @@ public class Shell {
 	 */
 	public static class ShellException extends Exception {
 		private static final long serialVersionUID = 4820332926695755116L;
-		private String mMsg;
+		private String mMsg = "Shell Interface Error";
 		
 		public ShellException() {
 			super();
-			mMsg = "Shell Interface Error";
 		}
 		
 		public ShellException(String msg) {
@@ -83,7 +82,6 @@ public class Shell {
 		 */
 		@Override
 		public String getMessage() {
-			// TODO Auto-generated method stub
 			return mMsg;
 		}	
 	}
