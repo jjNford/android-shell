@@ -66,24 +66,14 @@ public class Shell {
 	 */
 	public static class ShellException extends Exception {
 		private static final long serialVersionUID = 4820332926695755116L;
-		private String mMsg = "Shell Interface Error";
 		
 		public ShellException() {
 			super();
 		}
 		
 		public ShellException(String msg) {
-			mMsg = msg;
+			super(msg);
 		}
-		
-		/*
-		 * (non-Javadoc)
-		 * @see java.lang.Throwable#getMessage()
-		 */
-		@Override
-		public String getMessage() {
-			return mMsg;
-		}	
 	}
 	
 	/**
