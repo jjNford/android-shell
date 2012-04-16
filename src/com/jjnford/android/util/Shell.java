@@ -245,7 +245,7 @@ public class Shell {
 	 * 
 	 * @param ostream The output Stream to read shell from.
 	 */
-	synchronized public void setOutputStream(Shell.OUTPUT ostream) {
+	synchronized public static void setOutputStream(Shell.OUTPUT ostream) {
 		sOStream = ostream;
 	}
 	
@@ -254,7 +254,7 @@ public class Shell {
 	 * 
 	 * @param shell The shell to be used for sudo.
 	 */
-	synchronized public void setShell(String shell) {
+	synchronized public static void setShell(String shell) {
 		sShell = shell;
 	}
 	
