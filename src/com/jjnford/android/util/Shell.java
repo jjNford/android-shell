@@ -96,6 +96,11 @@ public class Shell {
 		}
 		
 		public String getOutput() {
+			try {
+				this.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			return mBuffer.toString();
 		}
 		
